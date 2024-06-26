@@ -1,0 +1,24 @@
+﻿<Window x:Class="Gym_Membership.TransactionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gym_Membership"
+        mc:Ignorable="d"
+        Title="Transaction" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="finishButton" Content="Back" HorizontalAlignment="Left" Margin="28,24,0,0" VerticalAlignment="Top" Click="backButton_Click"/>
+        <TextBox x:Name="totalPriceBox" HorizontalAlignment="Left" Margin="220,358,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="149" Height="23" IsReadOnly="True"/>
+        <TextBox x:Name="customerMoneyBox" HorizontalAlignment="Left" Margin="220,286,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="148" Height="23" TextChanged="customerMoneyBox_TextChanged" TextInput="customerMoneyBox_TextInput"/>
+        <Button Content="Finish Transaction" HorizontalAlignment="Center" Margin="0,404,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="priceDisplay" HorizontalAlignment="Left" Margin="452,76,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" FontSize="22"/>
+        <Label Content="Membership price:         / day" HorizontalAlignment="Center" Margin="0,70,0,0" VerticalAlignment="Top" FontSize="23"/>
+        <TextBox x:Name="daysBox" HorizontalAlignment="Left" Margin="420,286,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="148" Height="23" TextChanged="daysBox_TextChanged" TextInput="daysBox_TextInput"/>
+        <TextBox x:Name="changeBox" HorizontalAlignment="Left" Margin="420,358,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="148" Height="23" IsReadOnly="True"/>
+        <Label Content="Total Change:" HorizontalAlignment="Left" Margin="453,327,0,0" VerticalAlignment="Top"/>
+        <Label Content="Days to add" HorizontalAlignment="Left" Margin="458,255,0,0" VerticalAlignment="Top"/>
+        <Label Content="Customer's money" HorizontalAlignment="Left" Margin="240,255,0,0" VerticalAlignment="Top"/>
+        <Label Content="Total Price:" HorizontalAlignment="Left" Margin="261,327,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

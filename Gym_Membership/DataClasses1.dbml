@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="GymMembership" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=LAPTOP-9TASG5E3\SQLEXPRESS;Initial Catalog=GymMembership;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="Gym_Membership.Properties.Settings" SettingsPropertyName="GymMembershipConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Customer" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="Customer_ID" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="Customer_Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Transaction_ID" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="Staff_ID" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="Membership_Length" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Staff" Member="Staffs">
+    <Type Name="Staff">
+      <Column Name="Staff_ID" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="Staff_Name" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="Staff_Username" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="Staff_Password" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="Staff_Role" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Transactions" Member="Transactions">
+    <Type Name="Transaction">
+      <Column Name="Transaction_ID" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="Membership_Added_Length" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Customer_ID" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="Total_Price" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Total_Change" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,15 @@
+﻿<Window x:Class="Gym_Membership.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gym_Membership"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <TextBox x:Name="password" HorizontalAlignment="Center" Margin="0,318,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Width="120" GotFocus="password_GotFocus" LostFocus="password_LostFocus" KeyUp="password_KeyUp"/>
+        <Button x:Name="loginButton" Content="Login" HorizontalAlignment="Center" Margin="0,385,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.038,0.38" Click="loginButton_Click"/>
+        <TextBox x:Name="username" HorizontalAlignment="Center" Margin="0,279,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" Width="120" GotFocus="username_GotFocus" LostFocus="username_LostFocus" KeyUp="username_KeyUp"/>
+
+    </Grid>
+</Window>
