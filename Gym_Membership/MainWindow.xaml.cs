@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Gym_Membership.Menu;
 
 namespace Gym_Membership
 {
@@ -63,6 +64,12 @@ namespace Gym_Membership
 
                 if (loginFlag)
                 {
+                    Document document = new Document
+                    {
+                        DocumentName = "Sample Document",
+                        FilePath = "C:\\Path\\To\\Document.pdf" // Example file path
+                    };
+
                     MessageBox.Show($"Login success! Welcome back {userName}!");
                     Menu w1 = new Menu(null);
                     w1.Show();
@@ -150,6 +157,12 @@ namespace Gym_Membership
 
                     if (loginFlag)
                     {
+                        Document document = new Document
+                        {
+                            DocumentName = "Sample Document",
+                            FilePath = "C:\\Path\\To\\Document.pdf" // Example file path
+                        };
+
                         MessageBox.Show($"Login success! Welcome back {userName}!");
                         Menu w1 = new Menu(null);
                         w1.Show();

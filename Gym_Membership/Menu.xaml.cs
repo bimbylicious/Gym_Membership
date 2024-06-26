@@ -22,6 +22,7 @@ namespace Gym_Membership
         private bool isAscendingOrder = true;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private const string FolderName = "UploadedDocuments";
         private FilterInfoCollection videoDevices;
         private VideoCaptureDevice videoSource;
         private const string PictureFolderName = "Picture";
@@ -41,7 +42,7 @@ namespace Gym_Membership
             this.document = document; // Initialize with passed Document object
             LoadData();
             DataContext = this;
-
+            InitializeImageFolder();
             InitializeCamera(); // Initialize camera devices
         }
 

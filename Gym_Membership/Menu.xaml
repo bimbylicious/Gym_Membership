@@ -19,17 +19,17 @@
         </ListBox>
         <Button x:Name="signoutButton" Content="Sign out" HorizontalAlignment="Left" Margin="38,20,0,0" VerticalAlignment="Top" Click="signoutButton_Click"/>
         <Button x:Name="transactionHistoryButton" Content="Transaction History" HorizontalAlignment="Left" Margin="671,20,0,0" VerticalAlignment="Top" Click="transactionHistoryButton_Click"/>
-        <Button x:Name="newCustomer" Content="Add a customer" HorizontalAlignment="Left" Margin="436,397,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="newCustomer" Content="Add a customer" HorizontalAlignment="Left" Margin="436,397,0,0" VerticalAlignment="Top" Click="newCustomer_Click"/>
         <Label Content="ID" HorizontalAlignment="Left" Margin="469,200,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="idBox" HorizontalAlignment="Left" Margin="420,226,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="nameBox" HorizontalAlignment="Left" Margin="573,226,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="idBox" HorizontalAlignment="Left" Margin="420,226,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <TextBox x:Name="nameBox" HorizontalAlignment="Left" Margin="573,226,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Label Content="Name" HorizontalAlignment="Left" Margin="612,200,0,0" VerticalAlignment="Top"/>
         <Label Content="Status" HorizontalAlignment="Left" Margin="267,22,0,0" VerticalAlignment="Top"/>
         <Label Content="Membership Length" HorizontalAlignment="Left" Margin="422,266,0,0" VerticalAlignment="Top"/>
         <Button Content="Extend membership" HorizontalAlignment="Left" Margin="578,397,0,0" VerticalAlignment="Top" Click="Button_Click"/>
         <TextBlock x:Name="statusBlock" HorizontalAlignment="Left" Margin="338,30,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <TextBox x:Name="membershipBox" HorizontalAlignment="Left" Margin="420,297,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="staffIDBox" HorizontalAlignment="Left" Margin="573,297,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="membershipBox" HorizontalAlignment="Left" Margin="420,297,0,0" TextWrapping="Wrap" Text="{Binding SelectedCustomer.Membership_Length, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="staffIDBox" HorizontalAlignment="Left" Margin="573,297,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Label Content="Staff ID" HorizontalAlignment="Left" Margin="608,266,0,0" VerticalAlignment="Top"/>
         <Button x:Name="customerSort" Content="Sort" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top" Click="customerSort_Click" Background="White" Width="52"/>
         <Image x:Name="Picture" HorizontalAlignment="Left" Height="100" Margin="436,78,0,0" VerticalAlignment="Top" Width="100"/>
