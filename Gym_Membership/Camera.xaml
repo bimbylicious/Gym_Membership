@@ -8,6 +8,6 @@
         Title="Camera" Height="450" Width="800">
     <Grid>
         <Image x:Name="cameraImage" Height="NaN" Margin="252,109,252,109" Width="NaN"/>
-        <Button Content="Capture" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,351,0,0" Width="100" Height="30" Click="CaptureImage_Click"/>
+        <Button Content="Capture" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,363,0,0" Width="100" Height="30" Click="CaptureImage_Click"/>
     </Grid>
 </Window>
