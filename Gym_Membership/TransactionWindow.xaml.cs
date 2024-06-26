@@ -26,8 +26,6 @@ namespace Gym_Membership
 
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
-            Menu w1 = new Menu();
-            w1.Show();
             this.Close();
         }
         private void FinishTransaction_Click(object sender, RoutedEventArgs e)

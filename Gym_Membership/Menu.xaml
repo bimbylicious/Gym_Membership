@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Menu" Height="450" Width="800">
     <Grid>
-        <ListBox x:Name="customerList" ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer}" Margin="10,121,522,27" Width="Auto" BorderBrush="Black" SelectionChanged="customerList_SelectionChanged">
+        <ListBox x:Name="customerList" ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer}" Margin="10,121,522,27" Width="Auto" BorderBrush="Black" SelectionChanged="customerList_SelectionChanged" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -34,6 +34,7 @@
         <Button x:Name="customerSort" Content="Sort" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top" Click="customerSort_Click" Background="White" Width="52"/>
         <Image x:Name="Picture" HorizontalAlignment="Left" Height="100" Margin="436,78,0,0" VerticalAlignment="Top" Width="100"/>
         <Image x:Name="IdentificationCard" HorizontalAlignment="Left" Height="100" Margin="578,78,0,0" VerticalAlignment="Top" Width="100"/>
-
+        <Button x:Name="capturePictureButton" Content="Capture Picture" HorizontalAlignment="Left" Margin="436,200,0,0" VerticalAlignment="Top" Click="CapturePictureButton_Click"/>
+        <Button x:Name="captureIdentificationCardButton" Content="Capture ID Card" HorizontalAlignment="Left" Margin="578,200,0,0" VerticalAlignment="Top" Click="CaptureIdentificationCardButton_Click"/>
     </Grid>
 </Window>

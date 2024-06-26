@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
+using System.Drawing;
 
 namespace Gym_Membership
 {
@@ -23,13 +24,17 @@ namespace Gym_Membership
 
         private FilterInfoCollection videoDevices;
         private VideoCaptureDevice videoSource;
-
-        private const string FolderName = "UploadedDocuments";
         private const string PictureFolderName = "Picture";
         private const string IdentificationCardFolderName = "Identification_Card";
         private string imagesFolderPath;
-        private Document document; // Ensure Document class is properly defined or imported
+        private Document document;
+        public class Document
+        {
+            public string DocumentName { get; set; }
+            public string FilePath { get; set; }
 
+            // Additional properties and methods as needed
+        }
         public Menu(Document document)
         {
             InitializeComponent();
@@ -38,6 +43,20 @@ namespace Gym_Membership
             DataContext = this;
 
             InitializeCamera(); // Initialize camera devices
+        }
+
+        private void InitializeCamera()
+        {
+            videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            if (videoDevices.Count == 0)
+            {
+                MessageBox.Show("No video devices found");
+                return;
+            }
+
+            videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
+            videoSource.NewFrame += VideoSource_NewFrame;
+            videoSource.Start();
         }
 
         public ObservableCollection<Customer> Customers
@@ -65,7 +84,7 @@ namespace Gym_Membership
         {
             try
             {
-                string connectionString = "Data Source=LAPTOP-9TASG5E3\\SQLEXPRESS;Initial Catalog=GymMembership;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
+                string connectionString = "Data Source=LAPTOP-VQRQBKBN\\SQLEXPRESS;Initial Catalog=GymMembership;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
                 string query = "SELECT * FROM Customer;";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -168,26 +187,20 @@ namespace Gym_Membership
 
         private string GetDocumentPath(string customerId, string folderName)
         {
-            string targetFolderPath = Path.Combine(imagesFolderPath, customerId, folderName);
-            if (!Directory.Exists(targetFolderPath))
+            string targetFolderPath = Path.Combine(imagesFolderPath, SelectedCustomer.Customer_ID, folderName);
+            try
             {
-                Directory.CreateDirectory(targetFolderPath);
+                if (!Directory.Exists(targetFolderPath))
+                {
+                    Directory.CreateDirectory(targetFolderPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error creating directory: {ex.Message}");
+                // Handle the exception as needed
             }
             return targetFolderPath;
-        }
-
-        private void InitializeCamera()
-        {
-            videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            if (videoDevices.Count == 0)
-            {
-                MessageBox.Show("No video devices found");
-                return;
-            }
-
-            videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
-            videoSource.NewFrame += VideoSource_NewFrame;
-            videoSource.Start();
         }
 
         private void VideoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
@@ -196,53 +209,78 @@ namespace Gym_Membership
             // For example, you could display the frame in a PictureBox
         }
 
-        private void CapturePicture_Click(object sender, RoutedEventArgs e)
+        private void CapturePictureButton_Click(object sender, RoutedEventArgs e)
         {
-            CaptureImage("Picture");
+            OpenCameraAndCapture("Picture");
         }
 
-        private void CaptureIdentificationCard_Click(object sender, RoutedEventArgs e)
+        private void CaptureIdentificationCardButton_Click(object sender, RoutedEventArgs e)
         {
-            CaptureImage("Identification_Card");
+            OpenCameraAndCapture("Identification_Card");
         }
 
-        private void CaptureImage(string documentType)
+        private void OpenCameraAndCapture(string documentType)
         {
-            if (videoSource == null || !videoSource.IsRunning)
+            try
             {
-                MessageBox.Show("Video source is not running");
-                return;
-            }
-
-            videoSource.NewFrame += (sender, eventArgs) =>
-            {
-                Bitmap image = (Bitmap)eventArgs.Frame.Clone();
-
-                // Proceed with saving the image or displaying it
-                string customerId = SelectedCustomer?.Customer_ID;
-                if (!string.IsNullOrEmpty(customerId))
+                Camera cameraWindow = new Camera();
+                if (cameraWindow.ShowDialog() == true)
                 {
-                    string folderName = documentType == "Picture" ? PictureFolderName : IdentificationCardFolderName;
-                    string targetFolderPath = GetDocumentPath(customerId, folderName);
-                    string targetFilePath = Path.Combine(targetFolderPath, $"{DateTime.Now.ToString("yyyyMMddHHmmss")}.jpg");
+                    string capturedImagePath = cameraWindow.CapturedImagePath;
+                    if (!string.IsNullOrEmpty(capturedImagePath))
+                    {
+                        // Save the captured image to the respective folder
+                        string targetFolderPath = GetDocumentPath(documentType);
+                        string targetFilePath = Path.Combine(targetFolderPath, $"{DateTime.Now.ToString("yyyyMMddHHmmss")}.jpg");
 
-                    try
-                    {
-                        image.Save(targetFilePath, System.Drawing.Imaging.ImageFormat.Jpeg);
-                        MessageBox.Show($"Image captured and saved: {targetFilePath}");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error saving image: {ex.Message}");
+                        // Copy the captured image to the target folder
+                        File.Copy(capturedImagePath, targetFilePath, true);
+
+                        // Update the database with the file path (assume Customer class and SQL connection is set up)
+                        UpdateCustomerDocumentPath(documentType, targetFilePath);
+
+                        // Reload the images in UI
+                        LoadCustomerImages(SelectedCustomer.Customer_ID);
                     }
                 }
-
-                // Stop capturing after the image is saved
-                videoSource.NewFrame -= VideoSource_NewFrame;
-            };
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error capturing image: {ex.Message}");
+            }
         }
 
+        private void UpdateCustomerDocumentPath(string documentType, string filePath)
+        {
+            // Update the Customer table in the database with the file path
+            try
+            {
+                string updateQuery = $"UPDATE Customer SET {documentType} = @FilePath WHERE Customer_ID = @CustomerID";
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.GymMembershipConnectionString))
+                {
+                    SqlCommand command = new SqlCommand(updateQuery, connection);
+                    command.Parameters.AddWithValue("@FilePath", filePath);
+                    command.Parameters.AddWithValue("@CustomerID", SelectedCustomer.Customer_ID);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating database: {ex.Message}");
+            }
+        }
 
+        private string GetDocumentPath(string folderName)
+        {
+            string targetFolderPath = Path.Combine(imagesFolderPath, SelectedCustomer.Customer_ID, folderName);
+            if (!Directory.Exists(targetFolderPath))
+            {
+                Directory.CreateDirectory(targetFolderPath);
+            }
+            return targetFolderPath;
+        }
+       
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             if (videoSource != null && videoSource.IsRunning)
@@ -256,6 +294,36 @@ namespace Gym_Membership
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void customerList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void signoutButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void transactionHistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void customerSort_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UploadPictureButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

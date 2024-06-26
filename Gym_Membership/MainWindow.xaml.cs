@@ -64,7 +64,7 @@ namespace Gym_Membership
                 if (loginFlag)
                 {
                     MessageBox.Show($"Login success! Welcome back {userName}!");
-                    Menu w1 = new Menu();
+                    Menu w1 = new Menu(null);
                     w1.Show();
                     this.Close();
                 }
@@ -151,7 +151,7 @@ namespace Gym_Membership
                     if (loginFlag)
                     {
                         MessageBox.Show($"Login success! Welcome back {userName}!");
-                        Menu w1 = new Menu();
+                        Menu w1 = new Menu(null);
                         w1.Show();
                         this.Close();
                     }
